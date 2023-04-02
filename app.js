@@ -23,19 +23,8 @@ document.addEventListener("click", (event) => {
   }
 });
 
-const generateRandomColour = () => {
-  const hexCodes = "0123456789ABCDEF";
-  let colour = "";
-
-  for (let i = 0; i < 6; i++) {
-    colour += hexCodes[Math.floor(Math.random() * hexCodes.length)];
-  }
-
-  return "#" + colour;
-};
-
-function copyToClickBoard(text) {
-  return navigator.clipboard.writeText(text);
+function copyToClickBoard(title) {
+  return navigator.clipboard.writeText(title);
 }
 
 function setRandomColours(isInitial) {
@@ -43,11 +32,21 @@ function setRandomColours(isInitial) {
 
   cols.forEach((col, index) => {
     const isLocked = col.querySelector("i").classList.contains("fa-lock");
-    const text = col.querySelector("h2");
+    const title = col.querySelector("h2");
+    const text = col.querySelector("p");
     const button = col.querySelector("button");
 
+    title.addEventListener("mouseup", () => {
+      text.textContent = "copied";
+      text.style.display = "block";
+    });
+
+    title.addEventListener("mouseleave", () => {
+      text.style.display = "none";
+    });
+
     if (isLocked) {
-      colors.push(text.textContent);
+      colors.push(title.textContent);
       return;
     }
 
@@ -61,18 +60,18 @@ function setRandomColours(isInitial) {
       colors.push(color);
     }
 
-    text.textContent = color;
+    title.textContent = color;
     col.style.background = color;
 
-    setTextColour(text, color);
+    setTextColour(title, color);
     setTextColour(button, color);
   });
   updateColorsnHash(colors);
 }
 
-function setTextColour(text, color) {
+function setTextColour(title, color) {
   const luminance = chroma(color).luminance();
-  text.style.color = luminance > 0.5 ? "black" : "white";
+  title.style.color = luminance > 0.5 ? "black" : "white";
 }
 
 function updateColorsnHash(colors = []) {

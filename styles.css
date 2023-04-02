@@ -41,3 +41,13 @@ body {
   background: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
+
+.tooltip {
+  position: absolute;
+  display: none;
+  top: 250px;
+  padding: 5px;
+  color: #000000;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
