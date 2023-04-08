@@ -69,9 +69,11 @@ function setRandomColours(isInitial) {
   updateColorsnHash(colors);
 }
 
-function setTextColour(title, color) {
-  const luminance = chroma(color).luminance();
-  title.style.color = luminance > 0.5 ? "black" : "white";
+function setTextColour(item, color) {
+  const opacityColor = chroma(color);
+  const luminance = opacityColor.luminance();
+
+  item.style.color = luminance > 0.5 ? "black" : "white";
 }
 
 function updateColorsnHash(colors = []) {
